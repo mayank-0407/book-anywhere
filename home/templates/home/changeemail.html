@@ -1,0 +1,38 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.108.0">
+    <title>Book Desk</title>
+    <link rel="icon" href="{% static 'images/main_logo.png' %}" type="image/icon type">
+    <link href="{% static 'bootstrap.min.css' %}" rel="stylesheet"> 
+    <link href="{% static 'new/change_pass.css' %}" rel="stylesheet">
+  </head>
+  <body class="text-center">
+    
+    <main class="form-signin w-100 m-auto">
+      <form action="{% url 'email_for_change_verified' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h1 class="h3 mb-3 fw-normal">Change Your BookDesk Password</h1>
+        <div class="form-floating">
+          <input type="email" name="email" class="form-control" id="floatingInput" value={{ data.email }} placeholder="name@example.com" hidden>
+          <label for="email">Email address</label>
+        </div>
+        <div class="form-floating border-3 border-primary">
+          <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
+          <label for="Password">Password</label>
+        </div>
+        <div class="form-floating border-3">
+          <input type="password" name="cpassword" class="form-control" id="floatingPassword" placeholder="Confirm Password">
+          <label for="cPassword">Confirm Password</label>
+        </div>
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Change Password</button>
+      </form>
+    </main>
+    
+  </body>
+</html>

@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>YourProfile</title>
+    <link rel="icon" href="{% static 'images/main_logo.png' %}" type="image/icon type">
+    <link rel="stylesheet" href="{% static 'new/profile.css' %}" />
+</head>
+
+<body class="flex">
+    <div class="container">
+        <div class="user"></div>
+        <form action="./" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h1>Profile</h1>
+            <h2>{% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </h2>
+                <div class="input">
+                    <input name="username" type="text" value="{{ data.user.username }}" required />
+                    <label for="username">Username</label>
+                </div>
+                <div class="input">
+                    <input name="fname" type="text" value="{{ data.user.first_name }}" required />
+                    <label for="fname">First Name</label>
+                </div>
+                <div class="input">
+                    <input name="lname" type="text" value="{{ data.user.last_name }}" required />
+                    <label for="lname">Last Name</label>
+                </div>
+                <div class="input">
+                    <input name="email" type="email" value="{{ data.user.email }}" required />
+                    <label for="email">Email</label>
+                </div>
+                <div class="input box">
+                    <div class="L_btn"><a href="{% url 'change_pass' %}">Change Password?</a></div>
+                </div>
+                <input class="L_btn" type="submit" value="Update" />
+        </form>
+        
+    </div>
+</body>
+
+</html>

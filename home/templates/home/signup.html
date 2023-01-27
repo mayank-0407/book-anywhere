@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BookDesk</title>
+    <link rel="icon" href="{% static 'images/main_logo.png' %}" type="image/icon type">
+    <link rel="stylesheet" href="{% static 'new/signup.css' %}" />
+</head>
+
+<body class="flex">
+    <div class="container">
+        <div class="user"></div>
+        <form action="#" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+        <h1>SignUp </h1>
+        <h2>{% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </h2>
+            <input type="hidden" name="plan_id" value="{{plan.id}}" readonly> 
+            <div class="input">
+                <input name="plan_name" type="text"readonly />
+                <label for="plan_name">Selected Plan({{plan.name}} - ${{plan.price}})</label>
+            </div>
+            <div class="input">
+                <input name="username"  type="text" required />
+                <label for="username">Company Name</label>
+            </div>
+            <div class="input">
+                <input name="email"  type="email" required />
+                <label for="email">Email</label>
+            </div>
+            <div class="input">
+                <input name="password1"  type="password" required />
+                <label for="password1">Password</label>
+            </div>            
+            <div class="input box">
+                <input name="cpassword2" type="password" required />
+                <label for="cpassword2">Confirm Password</label>
+            </div>
+            <div class="input">
+                <input name="location"  type="text" required />
+                <label for="location">Location</label>
+            </div>
+            <input class="L_btn" type="submit" value="Pay and SignUp" />
+        </form>
+        <div class="div">
+            <div class="line"></div>
+            <div class="signup">Already Have an account? <a href="{% url 'signin' %}">Sign In</a></div>
+        </div>
+    </div>
+</body>
+
+</html>
