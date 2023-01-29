@@ -18,7 +18,11 @@ def SENDMAIL(subject, message, email):
         send_mail( subject, message, email_from, recipient_list )
     except:
         print("Unable to send the email")
-        
+def error(request):
+    error="Hmmm It looks that entered email "
+    error1="is not in our records."
+    return render(request,"home/error.html", context={"data": error,"data1":error1})
+         
 def generate_code(length):
     digits = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
     code = ""
@@ -30,6 +34,11 @@ def home(request):
     plans = Plan.objects.all().order_by('price').values
     return render(request,"home/home.html", context={"data": plans})
 
+def my_admin(request):
+    url=settings.BASE_URL_EMAIL+"/admin"
+    response=redirect(url)
+    return response
+
 def signout(request):
     logout(request)
     return redirect('home')
@@ -39,16 +48,28 @@ def forgot_pass(request):
         temp_email=request.POST.get('email')
         
         email=temp_email.lower()
-        myuser=User.objects.get(email=email)
+        try:
+            myuser=User.objects.get(email=email)
+        except:
+            error="Hmmm It looks that entered email "
+            error1="is not in our records."
+            return render(request,"home/error.html", context={"data": error,"data1":error1})
+            
         if send_forgot_email(myuser,email):
             messages.error(request, 'Success - Your Request for Forgot Password has been approved, You can Check your Email.')
             return redirect('home')
         else:
+            error="Hmmm It looks that entered email/usename "
+            error1="is not in our records."
             messages.error(request, 'Error - Server Error')
-            return redirect('home')
+            return render(request,"home/error.html", context={"data": error,"data1":error1})
         
 def send_forgot_email(user,email):
-    myuser=User.objects.get(username=user.username)
+    try:
+        myuser=User.objects.get(username=user.username)
+    except:
+        return False
+       
     try:
         mycompany=Company.objects.get(user=myuser)
     except:
@@ -87,13 +108,22 @@ def signin(request):
         try:
             verify_user=User.objects.get(username=uemail)    
         except:
-            verify_user=User.objects.get(email=uemail)    
+            try:
+                verify_user=User.objects.get(email=uemail)    
+            except:
+                error="Hmmm It looks that entered email "
+                error1="is not in our records."
+                return render(request,"home/error.html", context={"data": error,"data1":error1})
         # print(verify_user.email)
         if verify_user.is_active == False:
             # print('hi')
             if send_activate_email(verify_user,verify_user.email):
                 messages.error(request, 'Success - Your Email is not yet verified. So we have Sent Link to your email verify that to continue')
                 return redirect('home')  
+            else:
+                error="Hmmm It looks that entered email or"
+                error1="Username is not in our records."
+                return render(request,"home/error.html", context={"data": error,"data1":error1})
         try:
             tempuser=User.objects.get(email=uemail).username                  
             user=authenticate(request,username=tempuser,password=password)
@@ -130,9 +160,7 @@ def dashboard(request):
         return redirect('signin')
 
     if request.user.is_superuser:
-        signout(request)
-        messages.error(request, 'Error - Super user cannot signin Here.')
-        return redirect('home')
+        return redirect('admin')
 
     if request.user.is_staff:
         return redirect('staffdashboard')    
@@ -148,7 +176,11 @@ def dashboard(request):
             messages.error(request, 'Error - You Dont have Access to our Dashboard.')
             return redirect('signin')
 def send_activate_email(user,email):
-    myuser=User.objects.get(username=user.username)
+    
+    try:
+        myuser=User.objects.get(username=user.username)
+    except:
+        return False
     try:
         mycompany=Company.objects.get(user=myuser)
     except:

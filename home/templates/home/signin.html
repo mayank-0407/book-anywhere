@@ -18,8 +18,8 @@
         <form action="./" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
         <h1>Log In </h1>
-        <h2>{% for message in messages %}
-            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        <h2 >{% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}"{% endif %} style="color: #FF0000;">{{ message }}</li>
             {% endfor %}
         </h2>
             <div class="input">

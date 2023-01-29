@@ -21,12 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ["secret_key"]
+SECRET_KEY = "django-insecure-#o)c7zln2ha(k=sphs^meirs%j)d_d5(#u9p+uc)&n-n&rxk0y"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [os.environ["allowed_host"]]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -54,11 +54,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = os.environ["root_urlconf"]
+ROOT_URLCONF = "bookdesk.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': os.environ["template_backend"],
+        'BACKEND': "django.template.backends.django.DjangoTemplates",
         'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -72,7 +72,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = os.environ["wsgi_application"]
+WSGI_APPLICATION = "bookdesk.wsgi.application"
 
 
 # Database
@@ -127,16 +127,16 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-EMAIL_BACKEND = os.environ["email_backend"]
-EMAIL_HOST = os.environ["email_host"]
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = os.environ["email_host_user"]
-EMAIL_HOST_PASSWORD = os.environ["email_host_password"]
+EMAIL_HOST_USER = "mayank.tempdata@gmail.com"
+EMAIL_HOST_PASSWORD = "ambhhidvifqtonzs"
 
-BASE_URL_EMAIL=os.environ["base_url"]
+BASE_URL_EMAIL="http://127.0.0.1:8000"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = os.environ["default_auto_field"]
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
