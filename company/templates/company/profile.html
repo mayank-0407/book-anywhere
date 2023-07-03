@@ -18,7 +18,7 @@
             {% csrf_token %}
             <h1>Profile</h1>
             <h2>{% for message in messages %}
-                <li style="color: #FF0000;" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
                 {% endfor %}
             </h2>
                 <div class="input">

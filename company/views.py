@@ -53,14 +53,11 @@ def change_pass(request):
         messages.error(request, 'Success - You can change Your password through email sent to you email')
         return redirect('view_profile')
     else:
-        messages.error(request, 'Error - Server Error or Email/Username not valid')
+        messages.error(request, 'Error - Server Error')
         return redirect('view_profile')
 
 def send_forgot_email(user,email):
-    try:
-        myuser=User.objects.get(username=user.username)
-    except:
-        False
+    myuser=User.objects.get(username=user.username)
     try:
         mycompany=Company.objects.get(user=myuser)
     except:
@@ -310,8 +307,8 @@ def addDesk(request):
             #     messages.error(request, 'Error - As Said Enter deskcount between 1 and 3')
             #     return redirect('addDesk')
             
+            mycompany=Company.objects.get(user=request.user)
             try:
-                mycompany=Company.objects.get(user=request.user)
                 tempdesk=Desk.objects.create(company=mycompany,zone=zone,monitorCount=dcount,status=status,uniqueID=unique_id,start_date=today_datetime,end_date=today_datetime)
                 
                 messages.success(request, 'Success - Desk was Added')

@@ -14,14 +14,13 @@
 <body class="flex">
     <div class="container">
         <div class="user"></div>
-        <form action="#" method="POST" onsubmit ="return validate_passwords()" enctype="multipart/form-data">
+        <form action="#" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
         <h1>SignUp </h1>
         <h2>{% for message in messages %}
-            <li {% if message.tags %} class="{{ message.tags }}"{% endif %} style="color: #FF0000;">{{ message }}</li>
+            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
             {% endfor %}
         </h2>
-        <p id="passcheckerror" style="font-size: 10px; color: #FF0000;"></p>
             <input type="hidden" name="plan_id" value="{{plan.id}}" readonly> 
             <div class="input">
                 <input name="plan_name" type="text"readonly />
@@ -36,11 +35,11 @@
                 <label for="email">Email</label>
             </div>
             <div class="input">
-                <input name="password1"  type="password" id="password1" required />
+                <input name="password1"  type="password" required />
                 <label for="password1">Password</label>
             </div>            
             <div class="input box">
-                <input name="cpassword2" type="password" id="password2" required />
+                <input name="cpassword2" type="password" required />
                 <label for="cpassword2">Confirm Password</label>
             </div>
             <div class="input">
@@ -55,6 +54,5 @@
         </div>
     </div>
 </body>
-<script src="{% static 'new/pass_check.js' %}"></script>  
 
 </html>

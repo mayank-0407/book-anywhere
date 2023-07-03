@@ -1,1 +1,0 @@
-web: gunicorn bookdesk.wsgi --log-file -
